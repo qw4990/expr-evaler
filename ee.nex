@@ -1,0 +1,30 @@
+/[ \t\n\r]/     { /* skip */ }
+/[0-9]+(\.[0-9]+)?/    {
+    var err error
+    numStr := yylex.Text()
+    lval.number, err = strconv.ParseFloat(numStr, 64)
+    if err != nil {
+        panic(fmt.Sprintf("invalid number: %v", ))
+    }
+    return NUM 
+}
+/and/       { return AND }
+/or/        { return OR }
+/[a-zA-Z_][a-zA-Z_0-9]*/    {
+    lval.variable = yylex.Text()
+    return VAR
+}
+/==/        { return EQ }
+/>=/        { return GE }
+/<=/        { return LE }
+/./         { return int(yylex.Text()[0]) }
+//
+
+package expr_evaler
+import (
+    "strconv"
+    "fmt"
+)
+
+func foo() {
+}

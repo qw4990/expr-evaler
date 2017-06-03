@@ -1,0 +1,560 @@
+
+state 0
+	$accept: .top $end 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 3
+	NUM  shift 6
+	VAR  shift 7
+	.  error
+
+	num_expr  goto 5
+	num_expr1  goto 10
+	bool_expr  goto 2
+	bool_expr1  goto 4
+	top  goto 1
+
+state 1
+	$accept:  top.$end 
+
+	$end  accept
+	.  error
+
+
+state 2
+	top:  bool_expr.    (1)
+	bool_expr:  bool_expr.AND bool_expr 
+	bool_expr:  bool_expr.OR bool_expr 
+
+	AND  shift 11
+	OR  shift 12
+	.  reduce 1 (src line 29)
+
+
+state 3
+	bool_expr:  '('.bool_expr ')' 
+	num_expr:  '('.num_expr ')' 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 3
+	NUM  shift 6
+	VAR  shift 7
+	.  error
+
+	num_expr  goto 14
+	num_expr1  goto 10
+	bool_expr  goto 13
+	bool_expr1  goto 4
+
+state 4
+	bool_expr:  bool_expr1.    (5)
+
+	.  reduce 5 (src line 52)
+
+
+state 5
+	bool_expr1:  num_expr.'>' num_expr 
+	bool_expr1:  num_expr.'<' num_expr 
+	bool_expr1:  num_expr.EQ num_expr 
+	bool_expr1:  num_expr.GE num_expr 
+	bool_expr1:  num_expr.LE num_expr 
+	num_expr:  num_expr.'+' num_expr 
+	num_expr:  num_expr.'-' num_expr 
+	num_expr1:  num_expr.'*' num_expr 
+	num_expr1:  num_expr.'/' num_expr 
+
+	'+'  shift 20
+	'-'  shift 21
+	'*'  shift 22
+	'/'  shift 23
+	'>'  shift 15
+	'<'  shift 16
+	EQ  shift 17
+	GE  shift 18
+	LE  shift 19
+	.  error
+
+
+state 6
+	num_expr:  NUM.    (11)
+
+	.  reduce 11 (src line 76)
+
+
+state 7
+	num_expr:  VAR.    (12)
+
+	.  reduce 12 (src line 78)
+
+
+state 8
+	num_expr:  '+'.num_expr 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 25
+	NUM  shift 6
+	VAR  shift 7
+	.  error
+
+	num_expr  goto 24
+	num_expr1  goto 10
+
+state 9
+	num_expr:  '-'.num_expr 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 25
+	NUM  shift 6
+	VAR  shift 7
+	.  error
+
+	num_expr  goto 26
+	num_expr1  goto 10
+
+state 10
+	num_expr:  num_expr1.    (18)
+
+	.  reduce 18 (src line 106)
+
+
+state 11
+	bool_expr:  bool_expr AND.bool_expr 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 3
+	NUM  shift 6
+	VAR  shift 7
+	.  error
+
+	num_expr  goto 5
+	num_expr1  goto 10
+	bool_expr  goto 27
+	bool_expr1  goto 4
+
+state 12
+	bool_expr:  bool_expr OR.bool_expr 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 3
+	NUM  shift 6
+	VAR  shift 7
+	.  error
+
+	num_expr  goto 5
+	num_expr1  goto 10
+	bool_expr  goto 28
+	bool_expr1  goto 4
+
+state 13
+	bool_expr:  '(' bool_expr.')' 
+	bool_expr:  bool_expr.AND bool_expr 
+	bool_expr:  bool_expr.OR bool_expr 
+
+	')'  shift 29
+	AND  shift 11
+	OR  shift 12
+	.  error
+
+
+state 14
+	bool_expr1:  num_expr.'>' num_expr 
+	bool_expr1:  num_expr.'<' num_expr 
+	bool_expr1:  num_expr.EQ num_expr 
+	bool_expr1:  num_expr.GE num_expr 
+	bool_expr1:  num_expr.LE num_expr 
+	num_expr:  '(' num_expr.')' 
+	num_expr:  num_expr.'+' num_expr 
+	num_expr:  num_expr.'-' num_expr 
+	num_expr1:  num_expr.'*' num_expr 
+	num_expr1:  num_expr.'/' num_expr 
+
+	'+'  shift 20
+	'-'  shift 21
+	'*'  shift 22
+	'/'  shift 23
+	')'  shift 30
+	'>'  shift 15
+	'<'  shift 16
+	EQ  shift 17
+	GE  shift 18
+	LE  shift 19
+	.  error
+
+
+state 15
+	bool_expr1:  num_expr '>'.num_expr 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 25
+	NUM  shift 6
+	VAR  shift 7
+	.  error
+
+	num_expr  goto 31
+	num_expr1  goto 10
+
+state 16
+	bool_expr1:  num_expr '<'.num_expr 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 25
+	NUM  shift 6
+	VAR  shift 7
+	.  error
+
+	num_expr  goto 32
+	num_expr1  goto 10
+
+state 17
+	bool_expr1:  num_expr EQ.num_expr 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 25
+	NUM  shift 6
+	VAR  shift 7
+	.  error
+
+	num_expr  goto 33
+	num_expr1  goto 10
+
+state 18
+	bool_expr1:  num_expr GE.num_expr 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 25
+	NUM  shift 6
+	VAR  shift 7
+	.  error
+
+	num_expr  goto 34
+	num_expr1  goto 10
+
+state 19
+	bool_expr1:  num_expr LE.num_expr 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 25
+	NUM  shift 6
+	VAR  shift 7
+	.  error
+
+	num_expr  goto 35
+	num_expr1  goto 10
+
+state 20
+	num_expr:  num_expr '+'.num_expr 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 25
+	NUM  shift 6
+	VAR  shift 7
+	.  error
+
+	num_expr  goto 36
+	num_expr1  goto 10
+
+state 21
+	num_expr:  num_expr '-'.num_expr 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 25
+	NUM  shift 6
+	VAR  shift 7
+	.  error
+
+	num_expr  goto 37
+	num_expr1  goto 10
+
+state 22
+	num_expr1:  num_expr '*'.num_expr 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 25
+	NUM  shift 6
+	VAR  shift 7
+	.  error
+
+	num_expr  goto 38
+	num_expr1  goto 10
+
+state 23
+	num_expr1:  num_expr '/'.num_expr 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 25
+	NUM  shift 6
+	VAR  shift 7
+	.  error
+
+	num_expr  goto 39
+	num_expr1  goto 10
+
+24: shift/reduce conflict (shift 20(0), red'n 13(0)) on '+'
+24: shift/reduce conflict (shift 21(0), red'n 13(0)) on '-'
+24: shift/reduce conflict (shift 22(0), red'n 13(0)) on '*'
+24: shift/reduce conflict (shift 23(0), red'n 13(0)) on '/'
+state 24
+	num_expr:  '+' num_expr.    (13)
+	num_expr:  num_expr.'+' num_expr 
+	num_expr:  num_expr.'-' num_expr 
+	num_expr1:  num_expr.'*' num_expr 
+	num_expr1:  num_expr.'/' num_expr 
+
+	'+'  shift 20
+	'-'  shift 21
+	'*'  shift 22
+	'/'  shift 23
+	.  reduce 13 (src line 86)
+
+
+state 25
+	num_expr:  '('.num_expr ')' 
+
+	'+'  shift 8
+	'-'  shift 9
+	'('  shift 25
+	NUM  shift 6
+	VAR  shift 7
+	.  error
+
+	num_expr  goto 40
+	num_expr1  goto 10
+
+26: shift/reduce conflict (shift 20(0), red'n 14(0)) on '+'
+26: shift/reduce conflict (shift 21(0), red'n 14(0)) on '-'
+26: shift/reduce conflict (shift 22(0), red'n 14(0)) on '*'
+26: shift/reduce conflict (shift 23(0), red'n 14(0)) on '/'
+state 26
+	num_expr:  '-' num_expr.    (14)
+	num_expr:  num_expr.'+' num_expr 
+	num_expr:  num_expr.'-' num_expr 
+	num_expr1:  num_expr.'*' num_expr 
+	num_expr1:  num_expr.'/' num_expr 
+
+	'+'  shift 20
+	'-'  shift 21
+	'*'  shift 22
+	'/'  shift 23
+	.  reduce 14 (src line 90)
+
+
+27: shift/reduce conflict (shift 11(0), red'n 3(0)) on AND
+27: shift/reduce conflict (shift 12(0), red'n 3(0)) on OR
+state 27
+	bool_expr:  bool_expr.AND bool_expr 
+	bool_expr:  bool_expr AND bool_expr.    (3)
+	bool_expr:  bool_expr.OR bool_expr 
+
+	AND  shift 11
+	OR  shift 12
+	.  reduce 3 (src line 44)
+
+
+28: shift/reduce conflict (shift 11(0), red'n 4(0)) on AND
+28: shift/reduce conflict (shift 12(0), red'n 4(0)) on OR
+state 28
+	bool_expr:  bool_expr.AND bool_expr 
+	bool_expr:  bool_expr.OR bool_expr 
+	bool_expr:  bool_expr OR bool_expr.    (4)
+
+	AND  shift 11
+	OR  shift 12
+	.  reduce 4 (src line 48)
+
+
+state 29
+	bool_expr:  '(' bool_expr ')'.    (2)
+
+	.  reduce 2 (src line 39)
+
+
+state 30
+	num_expr:  '(' num_expr ')'.    (15)
+
+	.  reduce 15 (src line 94)
+
+
+state 31
+	bool_expr1:  num_expr '>' num_expr.    (6)
+	num_expr:  num_expr.'+' num_expr 
+	num_expr:  num_expr.'-' num_expr 
+	num_expr1:  num_expr.'*' num_expr 
+	num_expr1:  num_expr.'/' num_expr 
+
+	'+'  shift 20
+	'-'  shift 21
+	'*'  shift 22
+	'/'  shift 23
+	.  reduce 6 (src line 54)
+
+
+state 32
+	bool_expr1:  num_expr '<' num_expr.    (7)
+	num_expr:  num_expr.'+' num_expr 
+	num_expr:  num_expr.'-' num_expr 
+	num_expr1:  num_expr.'*' num_expr 
+	num_expr1:  num_expr.'/' num_expr 
+
+	'+'  shift 20
+	'-'  shift 21
+	'*'  shift 22
+	'/'  shift 23
+	.  reduce 7 (src line 59)
+
+
+state 33
+	bool_expr1:  num_expr EQ num_expr.    (8)
+	num_expr:  num_expr.'+' num_expr 
+	num_expr:  num_expr.'-' num_expr 
+	num_expr1:  num_expr.'*' num_expr 
+	num_expr1:  num_expr.'/' num_expr 
+
+	'+'  shift 20
+	'-'  shift 21
+	'*'  shift 22
+	'/'  shift 23
+	.  reduce 8 (src line 63)
+
+
+state 34
+	bool_expr1:  num_expr GE num_expr.    (9)
+	num_expr:  num_expr.'+' num_expr 
+	num_expr:  num_expr.'-' num_expr 
+	num_expr1:  num_expr.'*' num_expr 
+	num_expr1:  num_expr.'/' num_expr 
+
+	'+'  shift 20
+	'-'  shift 21
+	'*'  shift 22
+	'/'  shift 23
+	.  reduce 9 (src line 67)
+
+
+state 35
+	bool_expr1:  num_expr LE num_expr.    (10)
+	num_expr:  num_expr.'+' num_expr 
+	num_expr:  num_expr.'-' num_expr 
+	num_expr1:  num_expr.'*' num_expr 
+	num_expr1:  num_expr.'/' num_expr 
+
+	'+'  shift 20
+	'-'  shift 21
+	'*'  shift 22
+	'/'  shift 23
+	.  reduce 10 (src line 71)
+
+
+36: shift/reduce conflict (shift 20(0), red'n 16(0)) on '+'
+36: shift/reduce conflict (shift 21(0), red'n 16(0)) on '-'
+36: shift/reduce conflict (shift 22(0), red'n 16(0)) on '*'
+36: shift/reduce conflict (shift 23(0), red'n 16(0)) on '/'
+state 36
+	num_expr:  num_expr.'+' num_expr 
+	num_expr:  num_expr '+' num_expr.    (16)
+	num_expr:  num_expr.'-' num_expr 
+	num_expr1:  num_expr.'*' num_expr 
+	num_expr1:  num_expr.'/' num_expr 
+
+	'+'  shift 20
+	'-'  shift 21
+	'*'  shift 22
+	'/'  shift 23
+	.  reduce 16 (src line 98)
+
+
+37: shift/reduce conflict (shift 20(0), red'n 17(0)) on '+'
+37: shift/reduce conflict (shift 21(0), red'n 17(0)) on '-'
+37: shift/reduce conflict (shift 22(0), red'n 17(0)) on '*'
+37: shift/reduce conflict (shift 23(0), red'n 17(0)) on '/'
+state 37
+	num_expr:  num_expr.'+' num_expr 
+	num_expr:  num_expr.'-' num_expr 
+	num_expr:  num_expr '-' num_expr.    (17)
+	num_expr1:  num_expr.'*' num_expr 
+	num_expr1:  num_expr.'/' num_expr 
+
+	'+'  shift 20
+	'-'  shift 21
+	'*'  shift 22
+	'/'  shift 23
+	.  reduce 17 (src line 102)
+
+
+38: shift/reduce conflict (shift 20(0), red'n 19(0)) on '+'
+38: shift/reduce conflict (shift 21(0), red'n 19(0)) on '-'
+38: shift/reduce conflict (shift 22(0), red'n 19(0)) on '*'
+38: shift/reduce conflict (shift 23(0), red'n 19(0)) on '/'
+state 38
+	num_expr:  num_expr.'+' num_expr 
+	num_expr:  num_expr.'-' num_expr 
+	num_expr1:  num_expr.'*' num_expr 
+	num_expr1:  num_expr '*' num_expr.    (19)
+	num_expr1:  num_expr.'/' num_expr 
+
+	'+'  shift 20
+	'-'  shift 21
+	'*'  shift 22
+	'/'  shift 23
+	.  reduce 19 (src line 108)
+
+
+39: shift/reduce conflict (shift 20(0), red'n 20(0)) on '+'
+39: shift/reduce conflict (shift 21(0), red'n 20(0)) on '-'
+39: shift/reduce conflict (shift 22(0), red'n 20(0)) on '*'
+39: shift/reduce conflict (shift 23(0), red'n 20(0)) on '/'
+state 39
+	num_expr:  num_expr.'+' num_expr 
+	num_expr:  num_expr.'-' num_expr 
+	num_expr1:  num_expr.'*' num_expr 
+	num_expr1:  num_expr.'/' num_expr 
+	num_expr1:  num_expr '/' num_expr.    (20)
+
+	'+'  shift 20
+	'-'  shift 21
+	'*'  shift 22
+	'/'  shift 23
+	.  reduce 20 (src line 113)
+
+
+state 40
+	num_expr:  '(' num_expr.')' 
+	num_expr:  num_expr.'+' num_expr 
+	num_expr:  num_expr.'-' num_expr 
+	num_expr1:  num_expr.'*' num_expr 
+	num_expr1:  num_expr.'/' num_expr 
+
+	'+'  shift 20
+	'-'  shift 21
+	'*'  shift 22
+	'/'  shift 23
+	')'  shift 30
+	.  error
+
+
+18 terminals, 6 nonterminals
+21 grammar rules, 41/2000 states
+28 shift/reduce, 0 reduce/reduce conflicts reported
+55 working sets used
+memory: parser 40/30000
+25 extra closures
+157 shift entries, 1 exceptions
+21 goto entries
+20 entries saved by goto default
+Optimizer space used: output 79/30000
+79 table entries, 15 zero
+maximum spread: 18, maximum offset: 25
