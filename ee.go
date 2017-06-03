@@ -8,7 +8,7 @@ import (
 
 import "bytes"
 
-// VarTable variable table
+// VarTable variable table, all variables' type must be float64
 type VarTable map[string]float64
 
 var (
@@ -66,7 +66,7 @@ func setVarTable(p *yyParserImpl, varTable VarTable) {
 	varTableMap[ptr] = varTable
 }
 
-// Eval evaluate this expr with varTable
+// Eval evaluate this expr with this varTable;
 func Eval(expr string, varTable VarTable) (result bool, err error) {
 	lexer := NewLexer(bytes.NewReader([]byte(expr)))
 	parser := &yyParserImpl{}

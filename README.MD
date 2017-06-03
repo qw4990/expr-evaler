@@ -1,13 +1,20 @@
 # Expr Evaler(EE)
-EE is used to evaluate a bool expr, and get its result(true/false);
+EE is used to evaluate a bool expr, and return its result(true/false);
 
 In EE's exprs, you can use:
 
-+ <b>predefined</b> variable, but add variables' type must be float64;
++ <b>predefined</b> variables, but all variables' type must be float64;
 + numbers(float64), '+', '-', '*', '/', '(', ')' to do calculations;
 + '>', '<', '==', '>=', '<=', 'and', 'or' to do logical operations;
 
 # Examples
+## API
+// Eval evaluate this expr with this varTable;
+Eval(expr string, varTable VarTable) (result bool, err error)
+
+// VarTable variable table, all variables' type must be float64
+type VarTable map[string]float64
+
 ## Simple Expr
 ```
 Eval("2 * 2*2*2 > 17", nil)
@@ -38,3 +45,6 @@ Eval("a + 34 > b", VarTable{
 
 ## More Examples
 Please see ee_test.go :)
+
+# Dependencies
+EE based on goyacc and nex(https://github.com/blynn/nex);

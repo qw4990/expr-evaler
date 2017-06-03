@@ -14,9 +14,9 @@ import (
     variable string
 }
 
-%type <number> num_expr num_expr1 // num_expr1 主要是为了处理运算优先级, 使得 '*' 和 '/' 先被计算
+%type <number> num_expr num_expr1 
 
-%type <boolean> bool_expr bool_expr1 // bool_expr1 主要是为了处理运算优先级, 使得 '>' 和 '<' 先被计算
+%type <boolean> bool_expr bool_expr1 
 
 %token '+' '-' '*' '/' '(' ')' '>' '<' EQ GE LE AND OR
 
