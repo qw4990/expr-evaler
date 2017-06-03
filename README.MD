@@ -45,9 +45,16 @@ Eval("a > b", VarTable{
 
 Eval("a + 34 > b", VarTable{
     "a": 0.2222,
-	"b": 034,
+    "b": 034,
+})
+
+// you will get an error because these is an undefined variable "c"
+Eval("a > c", VarTable{
+    "a": 2333,
 })
 ```
+
+All variables in your expr should be predefined, otherwise you will get an error;
 
 ## More Examples
 Please see ee_test.go :)
