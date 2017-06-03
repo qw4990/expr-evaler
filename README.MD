@@ -7,13 +7,19 @@ In EE's exprs, you can use:
 + numbers(float64), '+', '-', '*', '/', '(', ')' to do calculations;
 + '>', '<', '==', '>=', '<=', 'and', 'or' to do logical operations;
 
-# Examples
+# API & Examples
 ## API
+```
 // Eval evaluate this expr with this varTable;
 Eval(expr string, varTable VarTable) (result bool, err error)
 
 // VarTable variable table, all variables' type must be float64
 type VarTable map[string]float64
+```
+
+The syntax of EE is very simple, so you can see some examples below to catch it;
+
+And completed syntax of EE is defined in ee.y;
 
 ## Simple Expr
 ```
